@@ -1,0 +1,45 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - 8083:8083
+      # - 443:443
+    volumes:
+      - ./template:/etc/nginx/nginx.conf
+      - ./ssl/cifdaq.crt:/ssl/server.crt
+      - ./ssl/private.key:/ssl/server.key
+    volumes_from:
+      - rest_server1
+    networks:
+      - default
+
+  rest_server1:
+    build:
+      dockerfile: "Dockerfile"
+      context: "."
+    container_name: rest_server_1
+    volumes:
+      - ./public/images:/usr/src/app/public/images
+    restart: unless-stopped
+    networks:
+      - default
+  # mongo:
+  #   image: mongo:3.6.19-xenial
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - mern-app
+  #   volumes:
+  #     - mongo-data:/data/db
+
+networks:
+  default:
+    external:
+      name: primal
+
+# volumes:
+#   mongo-data:
+#     driver: local
