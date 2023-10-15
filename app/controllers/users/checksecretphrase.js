@@ -23,13 +23,15 @@ const checksecretephrase = async (req, res) => {
     } else {
       const userphrase = req.body
       let dat = []
-      dat = userphrase.phrase.split(',')
+      dat = userphrase.phrase.split(' ')
+      console.log(dat,"dat")
       const flag = sphrase[0].phrase.length
       let flag1 = 0
       const dt = []
       for (let i = 0; i < sphrase[0].phrase.length; i++) {
         dt.push(decrypt(sphrase[0].phrase[i]))
       }
+      console.log(dt,"dt")
       for (let i = 0; i < dat.length; i++) {
         const cphrase = dt.indexOf(dat[i])
         if (cphrase === i) {

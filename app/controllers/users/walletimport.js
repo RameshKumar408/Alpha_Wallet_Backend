@@ -13,7 +13,7 @@ const walletimport = async (req, res) => {
     const userreq = req.body
     const id = await isIDGood(req.user._id)
     let dat = []
-    dat = userreq?.phrase?.split(',')
+    dat = userreq?.phrase?.split(' ')
     const phrase = await findavailablephrase(dat)
     if (phrase[0]) {
       const avauser = await Wallet.find({ userid: id })
