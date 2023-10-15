@@ -10,7 +10,7 @@ const trimRequest = require('trim-request')
 const { roleAuthorization } = require('../controllers/auth')
 
 const multer = require('multer')
-const {getGasAmounts} = require('../middleware/web3/getgasAmountonly')
+const { getGasAmounts } = require('../middleware/web3/getgasAmountonly')
 const {
   getUsers,
   createUser,
@@ -27,7 +27,8 @@ const {
   amountTransfer,
   addAssets,
   getAssets,
-  getgascontroller
+  getgascontroller,
+  addNetworks
 } = require('../controllers/users')
 
 const {
@@ -37,7 +38,8 @@ const {
   validateDeleteUser,
   validateCreateAddress,
   validateTransfer,
-  validateGetGasAmount
+  validateGetGasAmount,
+  validateAddNetwork
 } = require('../controllers/users/validators')
 
 const storage = multer.diskStorage({
@@ -122,6 +124,15 @@ router.get(
   roleAuthorization(['user']),
   trimRequest.all,
   createphrase
+)
+
+router.post(
+  '/addNetworks',
+  requireAuth,
+  roleAuthorization(['user']),
+  validateAddNetwork,
+  trimRequest.all,
+  addNetworks
 )
 /*
  * Import wallet

@@ -7,7 +7,7 @@ const NetworksSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        Rpc__url: {
+        Rpc_url: {
             type: String,
             required: true
         },
@@ -20,8 +20,7 @@ const NetworksSchema = new mongoose.Schema(
             required: true
         },
         Block_Explore: {
-            type: String,
-            required: true
+            type: String
         }
     },
     {
