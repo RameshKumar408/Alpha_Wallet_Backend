@@ -12,44 +12,63 @@ const walletimport = async (req, res) => {
   try {
     const userreq = req.body
     const id = await isIDGood(req.user._id)
-    let dat = []
-    dat = userreq?.phrase?.split(' ')
-    const phrase = await findavailablephrase(dat)
-    if (phrase[0]) {
-      const avauser = await Wallet.find({ userid: id })
-      if (avauser.length === 0) {
-        await Wallet.findOneAndUpdate(
-          { _id: phrase[0]._id },
-          {
-            $push: { userid: id }
-          }
-        )
-        await User.findOneAndUpdate(
-          { _id: id },
-          { verified: true, wadress: phrase[0]._id }
-        )
-      }
-      const data = await getAddress(phrase[0]._id)
-      if (data[0]) {
-        res.status(200).json({
-          success: true,
-          result: data,
-          message: 'WALLET FETCHED SUCCESSFULLY'
-        })
-      } else {
-        res.status(200).json({
-          success: true,
-          result: null,
-          message: 'WALLET NOT FOUND'
-        })
-      }
-    } else {
-      res.status(404).json({
+    if (userreq?.phrase === undefined) {
+      res.status(400).json({
         success: false,
         result: null,
-        message: 'INVALID PHRASE, TRY AGAIN'
+        message: 'Phrase Enter Phrase Key'
       })
+    } else {
+      let dat = []
+      dat = userreq?.phrase?.split(' ')
+      console.log(userreq, "dat")
+      if (dat?.length < 12 || dat?.length > 12) {
+        res.status(400).json({
+          success: false,
+          result: null,
+          message: 'Please Enter 12 Digit Phrase Key'
+        })
+      } else {
+        const phrase = await findavailablephrase(dat)
+        if (phrase[0]) {
+          const avauser = await Wallet.find({ userid: id })
+          if (avauser.length === 0) {
+            await Wallet.findOneAndUpdate(
+              { _id: phrase[0]._id },
+              {
+                $push: { userid: id }
+              }
+            )
+            await User.findOneAndUpdate(
+              { _id: id },
+              { verified: true, wadress: phrase[0]._id }
+            )
+          }
+          const data = await getAddress(phrase[0]._id)
+          if (data[0]) {
+            res.status(200).json({
+              success: true,
+              result: data,
+              message: 'WALLET FETCHED SUCCESSFULLY'
+            })
+          } else {
+            res.status(200).json({
+              success: true,
+              result: null,
+              message: 'WALLET NOT FOUND'
+            })
+          }
+        } else {
+          res.status(400).json({
+            success: false,
+            result: null,
+            message: 'INVALID PHRASE, TRY AGAIN'
+          })
+        }
+      }
     }
+
+
   } catch (error) {
     handleError(res, error)
   }

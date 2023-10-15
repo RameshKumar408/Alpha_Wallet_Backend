@@ -13,19 +13,27 @@ const address = require('../../models/address')
 const getAddressUser = async (req, res) => {
     try {
         const wallet_id = await wallet.findOne({ userid: { $in: req.user._id } })
-        const address1 = await address.find({ Daddress: wallet_id._id }, 'address Label isdefaultacc')
-        if (address1[0]) {
-            res.status(200).json({
-                success: true,
-                result: address1,
-                message: 'User Phrase Verified successfully'
-            })
+        if (wallet_id) {
+            const address1 = await address.find({ Daddress: wallet_id._id }, 'address Label isdefaultacc')
+            if (address1[0]) {
+                res.status(200).json({
+                    success: true,
+                    result: address1,
+                    message: 'User Phrase Verified successfully'
+                })
+            } else {
+                res.status(200).json({
+                    success: true,
+                    message: 'No Wallets Found'
+                })
+            }
         } else {
-            res.status(200).json({
+            res.status(400).json({
                 success: true,
                 message: 'No Wallets Found'
             })
         }
+
 
     } catch (error) {
         handleError(res, error)

@@ -23,7 +23,7 @@ const AddressSchema = new mongoose.Schema({
     require: true
   },
   isdefaultacc: {
-    type: String,
+    type: Boolean,
     enum: [true, false],
     default: false,
     required: true

@@ -22,7 +22,7 @@ const createphrase = async (req, res) => {
     if (US?.wadress !== undefined) {
       const wid = US.wadress
       const phr = await Wallet.findOne({ _id: wid })
-      if (phr.isverified === false) {
+      if (phr?.isverified === false) {
         const wdt = []
         for (let i = 0; i < phr.phrase.length; i++) {
           wdt.push(decrypt(phr.phrase[i]))
@@ -33,7 +33,7 @@ const createphrase = async (req, res) => {
           message: 'USER PHRASE'
         })
       } else {
-        res.status(404).json({
+        res.status(400).json({
           success: false,
           result: null,
           message: 'USER PHRASE ALREADY CREATED'

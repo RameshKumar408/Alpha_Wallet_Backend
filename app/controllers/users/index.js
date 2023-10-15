@@ -21,6 +21,7 @@ const { amountTransfer } = require("./amountTransfer")
 const { addAssets } = require("./addAsset")
 const { getAssets } = require("./getAssets")
 const { getgascontroller } = require("./getgasAmount")
+const { addNetworks } = require('./addNetworks')
 
 module.exports = {
   createUser,
@@ -45,5 +46,6 @@ module.exports = {
   amountTransfer,
   addAssets,
   getAssets,
-  getgascontroller
+  getgascontroller,
+  addNetworks
 }
