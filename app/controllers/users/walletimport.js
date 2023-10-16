@@ -12,6 +12,7 @@ const walletimport = async (req, res) => {
   try {
     const userreq = req.body
     const id = await isIDGood(req.user._id)
+    console.log(id, "id")
     if (userreq?.phrase === undefined) {
       res.status(400).json({
         success: false,
@@ -21,7 +22,6 @@ const walletimport = async (req, res) => {
     } else {
       let dat = []
       dat = userreq?.phrase?.split(' ')
-      console.log(userreq, "dat")
       if (dat?.length < 12 || dat?.length > 12) {
         res.status(400).json({
           success: false,
@@ -30,20 +30,26 @@ const walletimport = async (req, res) => {
         })
       } else {
         const phrase = await findavailablephrase(dat)
+        console.log(phrase[0]._id, "phrase")
         if (phrase[0]) {
           const avauser = await Wallet.find({ userid: id })
-          if (avauser.length === 0) {
-            await Wallet.findOneAndUpdate(
-              { _id: phrase[0]._id },
-              {
-                $push: { userid: id }
-              }
-            )
-            await User.findOneAndUpdate(
-              { _id: id },
-              { verified: true, wadress: phrase[0]._id }
-            )
-          }
+          console.log(avauser, "avauser")
+          // if (avauser.length === 0) {
+          await Wallet.findOneAndUpdate(
+            { _id: avauser },
+            { $pull: { userid: id } }
+          )
+          await Wallet.findOneAndUpdate(
+            { _id: phrase[0]._id },
+            {
+              $push: { userid: id }
+            }
+          )
+          await User.findOneAndUpdate(
+            { _id: id },
+            { verified: true, wadress: phrase[0]._id }
+          )
+          // }
           const data = await getAddress(phrase[0]._id)
           if (data[0]) {
             res.status(200).json({

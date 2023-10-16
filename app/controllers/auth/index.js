@@ -13,6 +13,8 @@ const { initialProfile } = require('./initialProfile')
 const { profileUpdate } = require('./profileUpdate')
 const { checkDevice } = require('./checkDevice')
 const { importwallet } = require('./importwallet')
+const { changeWallet } = require('./changeWallet')
+const { deleteWallet } = require('./deleteWallet')
 
 module.exports = {
   forgotPassword,
@@ -29,5 +31,7 @@ module.exports = {
   initialProfile,
   profileUpdate,
   checkDevice,
-  importwallet
+  importwallet,
+  changeWallet,
+  deleteWallet
 }

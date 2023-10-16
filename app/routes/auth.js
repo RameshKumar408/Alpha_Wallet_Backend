@@ -22,7 +22,9 @@ const {
   initialProfile,
   profileUpdate,
   checkDevice,
-  importwallet
+  importwallet,
+  changeWallet,
+  deleteWallet
 } = require('../controllers/auth')
 
 const {
@@ -72,6 +74,22 @@ router.get(
   getRefreshToken
 )
 router.post('/importwallet', trimRequest.all, importwallet)
+
+router.post(
+  '/changeWallet',
+  requireAuth,
+  roleAuthorization(['user']),
+  trimRequest.all,
+  changeWallet
+)
+
+router.delete(
+  '/deleteWallet/:id',
+  requireAuth,
+  roleAuthorization(['user']),
+  trimRequest.all,
+  deleteWallet
+)
 
 /*
  * Login route

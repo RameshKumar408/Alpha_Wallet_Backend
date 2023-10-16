@@ -9,21 +9,30 @@ const { isIDGood, handleError } = require('../../middleware/utils')
  */
 const checkDevice = async (req, res) => {
     try {
-        const wallet_id = await User.findOne({ deviceid: req.body.deviceid })
+        if (req.body.deviceid) {
+            const wallet_id = await User.findOne({ deviceid: req.body.deviceid })
 
-        if (wallet_id) {
-            res.status(200).json({
-                success: true,
-                result: wallet_id,
-                message: 'DEVICE ID FOUND'
-            })
+            if (wallet_id) {
+                res.status(200).json({
+                    success: true,
+                    result: wallet_id,
+                    message: 'DEVICE ID FOUND'
+                })
+            } else {
+                res.status(400).json({
+                    success: false,
+                    result: null,
+                    message: 'DEVICE ID NOT FOUND'
+                })
+            }
         } else {
-            res.status(200).json({
+            res.status(400).json({
                 success: false,
                 result: null,
-                message: 'DEVICE ID NOT FOUND'
+                message: 'Please Enter deviceid'
             })
         }
+
 
     } catch (error) {
         handleError(res, error)

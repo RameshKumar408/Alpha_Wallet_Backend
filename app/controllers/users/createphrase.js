@@ -33,10 +33,15 @@ const createphrase = async (req, res) => {
           message: 'USER PHRASE'
         })
       } else {
-        res.status(400).json({
-          success: false,
-          result: null,
-          message: 'USER PHRASE ALREADY CREATED'
+        await Wallet.findByIdAndUpdate({ _id: wid }, { $pull: { userid: _id } })
+        const wallet = await Wallet.create({ phrase: dt, userid: _id })
+        await User.findByIdAndUpdate(_id, {
+          wadress: wallet._id
+        })
+        res.status(200).json({
+          success: true,
+          result: seedphrase,
+          message: 'PHRASE CREATED SUCCESSFULLY'
         })
       }
     } else {
