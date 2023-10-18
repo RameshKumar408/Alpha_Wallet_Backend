@@ -67,12 +67,16 @@ app.use(cors())
 app.use(passport.initialize())
 app.use(compression())
 app.use(helmet())
-app.use('/', express.static(path.join(__dirname, 'public')))
+app.use('/', express.static(path.join(__dirname, 'views')))
 app.set('views', path.join(__dirname, 'views'))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 app.set('view engine', 'ejs')
 app.use(require('./app/routes'))
+
+app.get('/', (req, res) => {
+  // res.render('./views/index.html')
+})
 app.listen(app.get('port'))
 // An error handling middleware
 process.on('uncaughtException', (error, origin) => {
