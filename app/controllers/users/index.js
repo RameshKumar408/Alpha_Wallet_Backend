@@ -22,6 +22,10 @@ const { addAssets } = require("./addAsset")
 const { getAssets } = require("./getAssets")
 const { getgascontroller } = require("./getgasAmount")
 const { addNetworks } = require('./addNetworks')
+const { getNetwork } = require('./getNetwork')
+const { addCoins } = require('./addCoins')
+const { getCoins } = require('./getCoins')
+const { getTokenDetails } = require('./getTokenDetails')
 
 module.exports = {
   createUser,
@@ -42,9 +46,13 @@ module.exports = {
   othersPropertyList,
   othersPropertyListCity,
   getKycDetails,
+  addCoins,
+  getCoins,
   allProperties,
+  getTokenDetails,
   amountTransfer,
   addAssets,
+  getNetwork,
   getAssets,
   getgascontroller,
   addNetworks

@@ -6,6 +6,7 @@ const { validateCreateAddress } = require('./validateCreateAddress')
 const { validateTransfer } = require('./validateTransfer')
 const { validateGetGasAmount } = require('./validateGetGasAmount')
 const { validateAddNetwork } = require('./validateAddNetwork')
+const { validateAddCoins } = require('./validateAddCoins')
 
 module.exports = {
   validateCreateUser,
@@ -15,5 +16,6 @@ module.exports = {
   validateCreateAddress,
   validateTransfer,
   validateGetGasAmount,
-  validateAddNetwork
+  validateAddNetwork,
+  validateAddCoins
 }

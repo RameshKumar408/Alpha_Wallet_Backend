@@ -17,6 +17,16 @@ const UserSchema = new mongoose.Schema(
     wadress: {
       type: mongoose.Schema.Types.ObjectId
     },
+    Networks: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+      ref: 'networks'
+    },
+    Coins: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+      // ref: 'TradePairs'
+    },
     // twofa: {
     //   type: String,
     //   enum: ['google', 'email', 'mobile', null],

@@ -24,7 +24,9 @@ const bcrypt = require('bcrypt')
 const login = async (req, res) => {
   try {
     const data = matchedData(req)
-    if (data.check === 'true') {
+    console.log(data.check, "check")
+    console.log(typeof (data.check), "check")
+    if (Boolean(data.check) === true) {
       const user = await findUser(data.deviceid)
       console.log(user, 'saf')
       if (user?.code === 404) {

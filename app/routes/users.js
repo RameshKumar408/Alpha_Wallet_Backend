@@ -28,7 +28,11 @@ const {
   addAssets,
   getAssets,
   getgascontroller,
-  addNetworks
+  addNetworks,
+  getNetwork,
+  addCoins,
+  getCoins,
+  getTokenDetails
 } = require('../controllers/users')
 
 const {
@@ -39,7 +43,8 @@ const {
   validateCreateAddress,
   validateTransfer,
   validateGetGasAmount,
-  validateAddNetwork
+  validateAddNetwork,
+  validateAddCoins
 } = require('../controllers/users/validators')
 
 const storage = multer.diskStorage({
@@ -95,6 +100,31 @@ router.post(
 )
 
 router.post(
+  '/addCoins',
+  requireAuth,
+  roleAuthorization(['user']),
+  trimRequest.all,
+  validateAddCoins,
+  addCoins
+)
+
+router.post(
+  '/getCoins',
+  requireAuth,
+  roleAuthorization(['user']),
+  trimRequest.all,
+  getCoins
+)
+
+router.post(
+  '/getTokenDetails',
+  requireAuth,
+  roleAuthorization(['user']),
+  trimRequest.all,
+  getTokenDetails
+)
+
+router.post(
   '/getGasAmount',
   requireAuth,
   roleAuthorization(['user']),
@@ -134,6 +164,13 @@ router.post(
   trimRequest.all,
   addNetworks
 )
+
+router.post(
+  '/getNetworks',
+  requireAuth,
+  roleAuthorization(['user']),
+  trimRequest.all,
+  getNetwork)
 /*
  * Import wallet
  */

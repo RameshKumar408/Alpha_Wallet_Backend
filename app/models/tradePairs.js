@@ -3,7 +3,19 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const TradePairSchema = new mongoose.Schema(
   {
-    name: {
+    Symbol: {
+      type: String,
+      required: true
+    },
+    Address: {
+      type: String,
+      required: true
+    },
+    Token_Decimal: {
+      type: String,
+      required: true
+    },
+    Network_id: {
       type: String,
       required: true
     }
